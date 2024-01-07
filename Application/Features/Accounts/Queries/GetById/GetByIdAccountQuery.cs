@@ -1,15 +1,26 @@
 ﻿using Application.Features.Accounts.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Logging;
+using Core.Application.Requests;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Accounts.Queries.GetById;
 
-public class GetByIdAccountQuery : IRequest<GetByIdAccountResponse>
+public class GetByIdAccountQuery : IRequest<GetByIdAccountResponse>, ICacheableRequest, ILoggableRequest
 {
     public int Id { get; set; }
+
+    public string CacheKey => $"GetByIdAccountQuery";
+
+    public bool BypassCache { get; }
+
+    public TimeSpan? SlidingExpiration { get; }
+
+    public string? CacheGroupKey => "GetAccounts";
 
     public class GetByIdAccountQueryHandler : IRequestHandler<GetByIdAccountQuery, GetByIdAccountResponse>
     {

@@ -1,5 +1,8 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Logging;
+using Core.Application.Requests;
 using Domain.Entities;
 using MediatR;
 
@@ -7,12 +10,14 @@ namespace Application.Features.MoneyTransactions.Queries.GetById;
 
 public partial class GetByIdMoneyTransactionQuery
 {
-    public class GetByIdBrandQueryHandler : IRequestHandler<GetByIdMoneyTransactionQuery, GetByIdMoneyTransactionResponse>
+    public class GetByIdMoneyTransactionQueryHandler : IRequestHandler<GetByIdMoneyTransactionQuery, GetByIdMoneyTransactionResponse>
     {
         private readonly IMapper _mapper;
         private readonly IMoneyTransactionRepository _moneyTransactionRepository;
 
-        public GetByIdBrandQueryHandler(IMapper mapper, IMoneyTransactionRepository moneyTransactionRepository)
+       
+
+        public GetByIdMoneyTransactionQueryHandler(IMapper mapper, IMoneyTransactionRepository moneyTransactionRepository)
         {
             _mapper = mapper;
             _moneyTransactionRepository = moneyTransactionRepository;

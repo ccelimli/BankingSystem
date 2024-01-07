@@ -1,15 +1,25 @@
 ﻿using Application.Features.Users.Rules;
 using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Logging;
 using Domain.Entities;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Users.Queries.GetById;
 
-public class GetByIdUserQuery : IRequest<GetByIdUserResponse>
+public class GetByIdUserQuery : IRequest<GetByIdUserResponse>, ICacheableRequest, ILoggableRequest
 {
     public int Id { get; set; }
+
+    public string CacheKey => "";
+
+    public bool BypassCache { get; }
+
+    public TimeSpan? SlidingExpiration { get; }
+
+    public string? CacheGroupKey => "GetUsers";
 
     public class GetByIdUserQueryHandler : IRequestHandler<GetByIdUserQuery, GetByIdUserResponse>
     {

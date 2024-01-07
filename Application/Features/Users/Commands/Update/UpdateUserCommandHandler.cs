@@ -25,7 +25,7 @@ public partial class UpdateUserCommand
             await _userBusinessRules.UserMustBePresent(request.Id);
             await _userBusinessRules.UserEmailCannotBeDuplicated(request.Email);
             await _userBusinessRules.UserPhoneNumberCannotBeDuplicated(request.PhoneNumber);
-            await _userBusinessRules.UserNationalityNoCannotBeDuplicated(request.IdentityNumber);
+            await _userBusinessRules.UserNationalityNoCannotBeDuplicated(request.NationalityNo);
 
             User? user = await _userRepository.GetAsync(predicate: user => user.Id == request.Id, cancellationToken: cancellationToken);
             user = _mapper.Map(request, user);
