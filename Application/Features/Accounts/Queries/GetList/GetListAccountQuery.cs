@@ -1,5 +1,7 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Logging;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -9,9 +11,17 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Application.Features.Accounts.Queries.GetList;
 
-public class GetListAccountQuery : IRequest<GetListResponse<GetListAccountListItemResponse>>
+public class GetListAccountQuery : IRequest<GetListResponse<GetListAccountListItemResponse>>, ICacheableRequest, ILoggableRequest
 {
     public PageRequest PageRequest { get; set; }
+
+    public string CacheKey => $"GetListAccountQuery({PageRequest.PageIndex}, {PageRequest.PageSize})";
+
+    public bool BypassCache { get; }
+
+    public TimeSpan? SlidingExpiration { get; }
+
+    public string? CacheGroupKey => "GetAccounts";
 
     public class GetListAccountQueryHandler : IRequestHandler<GetListAccountQuery, GetListResponse<GetListAccountListItemResponse>>
     {

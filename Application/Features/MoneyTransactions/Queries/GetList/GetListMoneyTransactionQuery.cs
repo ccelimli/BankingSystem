@@ -1,5 +1,7 @@
 ﻿using Application.Services.Repositories;
 using AutoMapper;
+using Core.Application.Pipelines.Caching;
+using Core.Application.Pipelines.Logging;
 using Core.Application.Requests;
 using Core.Application.Responses;
 using Core.Persistence.Paging;
@@ -14,9 +16,17 @@ using System.Threading.Tasks;
 
 namespace Application.Features.MoneyTransactions.Queries.GetList;
 
-public class GetListMoneyTransactionQuery : IRequest<GetListResponse<GetListMoneyTransactionDto>>
+public class GetListMoneyTransactionQuery : IRequest<GetListResponse<GetListMoneyTransactionDto>>, ICacheableRequest, ILoggableRequest
 {
     public PageRequest PageRequest { get; set; }
+
+    public string CacheKey => $"GetListMoneyTransaction({PageRequest.PageIndex}, {PageRequest.PageSize})";
+
+    public bool BypassCache { get; }
+
+    public TimeSpan? SlidingExpiration { get; }
+
+    public string? CacheGroupKey => "GetMoneyTransactions";
 
     public class GetListBrandQueryHandler : IRequestHandler<GetListMoneyTransactionQuery, GetListResponse<GetListMoneyTransactionDto>>
     {
