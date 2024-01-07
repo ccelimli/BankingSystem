@@ -15,9 +15,9 @@ namespace Application.Features.Loans.Constants
         public LoanInterestRate()
         {
             data.Add(0, 2.80);  
-            data.Add(1, 2.80);  
-            data.Add(2, 2.80);  
-            data.Add(3, 2.80);  
+            data.Add(1, 3.65);  
+            data.Add(2, 3.74);  
+            data.Add(3, 3.25);  
         }
 
         public Dictionary<int,double> Data { get=> data;}

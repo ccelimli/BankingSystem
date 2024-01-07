@@ -34,8 +34,6 @@ public static class ApplicationServiceRegistration
         //File Logger
         services.AddSingleton<LoggerServiceBase, FileLogger>();
 
-        // MsSQLServer Logger 
-        //services.AddSingleton<LoggerServiceBase, MsSqlLogger>();
 
         services.AddScoped<IAccountService, AccountManager>();
         services.AddScoped<IUserService, UserManager>();
